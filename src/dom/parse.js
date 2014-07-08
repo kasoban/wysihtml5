@@ -668,9 +668,134 @@ wysihtml5.dom.parse = (function() {
         return mapping[String(attributeValue).toLowerCase()];
       };
     })(),
+
+    color_text: (function() {
+      return function(attributeValue) {
+        if(canTranslateColorToClass(attributeValue)) {
+          return undefined;
+        } else {
+          console.log("Could not translate color " + String(attributeValue) + " to wysihtml5 class!");
+          return "color: " + String(attributeValue) + ";";
+        }
+      }
+    })()
   };
 
   // ------------ class converter (converts an html attribute to a class name) ------------ \\
+
+    var canTranslateColorToClass = (function() {
+        return function(color) {
+            return (translateColorToClass(color) != null);
+        }
+    })();
+
+    var translateColorToClass  = (function() {
+        var colorMap = {
+            "aqua": "wysiwyg-color-aqua",
+            "black": "wysiwyg-color-black",
+            "blue": "wysiwyg-color-blue",
+            "fuchsia": "wysiwyg-color-fuchsia",
+            "gray": "wysiwyg-color-gray",
+            "green": "wysiwyg-color-green",
+            "lime": "wysiwyg-color-lime",
+            "maroon": "wysiwyg-color-maroon",
+            "navy": "wysiwyg-color-navy",
+            "olive": "wysiwyg-color-olive",
+            "purple": "wysiwyg-color-purple",
+            "red": "wysiwyg-color-red",
+            "silver": "wysiwyg-color-silver",
+            "teal": "wysiwyg-color-teal",
+            "white": "wysiwyg-color-white",
+            "yellow": "wysiwyg-color-yellow"
+        };
+        var mapping = {};
+
+        //aqua
+        mapping["aqua"] = colorMap.aqua;
+        mapping["#00ffff"] = colorMap.aqua;
+        mapping["rgb(0,255,255)"] = colorMap.aqua;
+
+        //black
+        mapping["black"] = colorMap.black;
+        mapping["#000000"] = colorMap.black;
+        mapping["rgb(0,0,0)"] = colorMap.black;
+
+        //blue
+        mapping["blue"] = colorMap.blue;
+        mapping["#0000ff"] = colorMap.blue;
+        mapping["rgb(0,0,255)"] = colorMap.blue;
+
+        //fuchsia
+        mapping["fuchsia"] = colorMap.fuchsia;
+        mapping["#ff00ff"] = colorMap.fuchsia;
+        mapping["rgb(255,0,255)"] = colorMap.fuchsia;
+
+        //gray
+        mapping["gray"] = colorMap.gray;
+        mapping["#808080"] = colorMap.gray;
+        mapping["rgb(128,128,128)"] = colorMap.gray;
+
+        //green
+        mapping["green"] = colorMap.green;
+        mapping["#008000"] = colorMap.green;
+        mapping["rgb(0,128,0)"] = colorMap.green;
+
+        //lime
+        mapping["lime"] = colorMap.lime;
+        mapping["#00ff00"] = colorMap.lime;
+        mapping["rgb(0,255,0)"] = colorMap.lime;
+
+        //maroon
+        mapping["maroon"] = colorMap.maroon;
+        mapping["#800000"] = colorMap.maroon;
+        mapping["rgb(128,0,0)"] = colorMap.maroon;
+
+        //navy
+        mapping["navy"] = colorMap.navy;
+        mapping["#000080"] = colorMap.navy;
+        mapping["rgb(0,0,128)"] = colorMap.navy;
+
+        //olive
+        mapping["olive"] = colorMap.olive;
+        mapping["#808000"] = colorMap.olive;
+        mapping["rgb(128,128,0)"] = colorMap.olive;
+
+        //purple
+        mapping["purple"] = colorMap.purple;
+        mapping["#800080"] = colorMap.purple;
+        mapping["rgb(128,0,128)"] = colorMap.purple;
+
+        //red
+        mapping["red"] = colorMap.red;
+        mapping["#ff0000"] = colorMap.red;
+        mapping["rgb(255,0,0)"] = colorMap.red;
+
+        //silver
+        mapping["silver"] = colorMap.silver;
+        mapping["#c0c0c0"] = colorMap.silver;
+        mapping["rgb(192,192,192)"] = colorMap.silver;
+
+        //teal
+        mapping["teal"] = colorMap.teal;
+        mapping["#008080"] = colorMap.teal;
+        mapping["rgb(0,128,128)"] = colorMap.teal;
+
+        //white
+        mapping["white"] = colorMap.white;
+        mapping["#ffffff"] = colorMap.white;
+        mapping["rgb(255,255,255)"] = colorMap.white;
+
+        //yellow
+        mapping["yellow"] = colorMap.yellow;
+        mapping["#ffff00"] = colorMap.yellow;
+        mapping["rgb(255,255,0)"] = colorMap.yellow;
+
+        return function(color) {
+            return mapping[String(color).toLowerCase()];
+        }
+    })();
+
+
   var addClassMethods = {
     align_img: (function() {
       var mapping = {
@@ -721,6 +846,18 @@ wysihtml5.dom.parse = (function() {
       return function(attributeValue) {
         return mapping[String(attributeValue).charAt(0)];
       };
+    })(),
+
+    color_text: (function() {
+      return function(attributeValue) {
+        var translatedColor = translateColorToClass(attributeValue);
+
+        if(translatedColor != null) {
+            return translatedColor;
+        } else {
+            return undefined;
+        }
+      }
     })()
   };
 

@@ -265,11 +265,14 @@ var wysihtml5ParserRules = {
         "a": {
             "check_attributes": {
                 "href": "href", // if you compiled master manually then change this from 'url' to 'href'
-                "target": "any"
-            },
+                "target": "any",
+                "id": "any",
+                "title": "any",
+                "name": "any"
+            }/*,
             "set_attributes": {
                 "rel": "nofollow"
-            }
+            }*/
         },
         "img": {
             "one_of_type": {
@@ -458,8 +461,8 @@ var wysihtml5ParserRules = {
             },
             "keep_styles": {
                 "color": 1,
-                "backgroundColor": 1,
-                "fontSize": 1
+                //"backgroundColor": 1,
+                //"fontSize": 1
             },
             "remove_action": "unwrap"
         },
@@ -531,7 +534,11 @@ var wysihtml5ParserRules = {
         "font": {
             "rename_tag": "span",
             "add_class": {
-                "size": "size_font"
+                "size": "size_font",,
+                "color": "color_text"
+            },
+            "add_style": {
+                "color": "color_text"
             }
         },
         "tt": {
