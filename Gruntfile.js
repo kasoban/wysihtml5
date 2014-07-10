@@ -142,11 +142,31 @@ module.exports = function(grunt) {
           'dist/<%= pkg.name %>-toolbar.min.js': 'dist/<%= pkg.name %>-toolbar.js'
         }
       }
+    },
+    qunit: {
+      all: {
+        options: {
+          urls: [ 'http://localhost:3000/test/index.html']
+        }
+      } 
+    },
+    connect: {
+      server: {
+        options: {
+          hostname: 'localhost',
+          port: 3000,
+          base: '.'
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.registerTask('default', ['concat', 'uglify']);
+  grunt.registerTask('test', ['connect', 'qunit:all']);
+  grunt.registerTask('travis', ['connect', 'qunit:all']);
 };
